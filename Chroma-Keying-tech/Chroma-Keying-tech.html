@@ -1,1 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>資訊圖表：綠幕 vs. AI 直播去背</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #0B132B;
+            color: #E0E0E0;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .card {
+            background-color: #1C2541;
+            border: 1px solid #3A506B;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(91, 192, 190, 0.2);
+        }
+        .flowchart-node {
+            border: 2px solid #5BC0BE;
+            background-color: #1C2541;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .flowchart-connector {
+            height: 2px;
+            background-color: #3A506B;
+            width: 100%;
+        }
+        .flowchart-arrow::after {
+            content: '▼';
+            color: #5BC0BE;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 py-8 md:py-16">
+
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-6xl font-black text-white mb-4">直播主大哉問</h1>
+            <p class="text-xl md:text-2xl text-[#6FFFE9]">綠幕 vs. AI：您的直播去背終極指南</p>
+        </header>
+
+        <section id="intro" class="mb-20">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card rounded-xl p-8 flex flex-col items-center text-center">
+                    <span class="text-6xl mb-4">🎥</span>
+                    <h3 class="text-2xl font-bold text-white mb-2">綠幕技術 (色度去背)</h3>
+                    <p class="text-lg font-bold text-[#5BC0BE] mb-4">追求極致品質與精準控制</p>
+                    <p class="text-[#3A506B] font-semibold">透過實體綠色背景和專業打光，實現電影級的去背效果，適合對畫質有嚴苛要求的專業創作者。</p>
+                </div>
+                <div class="card rounded-xl p-8 flex flex-col items-center text-center">
+                    <span class="text-6xl mb-4">🤖</span>
+                    <h3 class="text-2xl font-bold text-white mb-2">AI 智慧去背</h3>
+                    <p class="text-lg font-bold text-[#6FFFE9] mb-4">享受無與倫比的便利與彈性</p>
+                    <p class="text-[#3A506B] font-semibold">無需任何實體背景，一鍵即可移除背景。適合追求快速、方便，以及在不同場景直播的使用者。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="fidelity" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-white mb-4">視覺保真度對決</h2>
+            <p class="text-lg text-center text-[#3A506B] max-w-3xl mx-auto mb-12">去背的品質直接影響觀眾的沉浸感。一個乾淨的邊緣和無瑕疵的畫面是專業的象徵。此圖表比較了兩者在關鍵視覺指標上的表現。</p>
+            <div class="card rounded-xl p-6 md:p-8">
+                <div class="chart-container h-80 md:h-96">
+                    <canvas id="fidelityChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="setup" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-white mb-4">設置複雜度與成本</h2>
+            <p class="text-lg text-center text-[#3A506B] max-w-3xl mx-auto mb-12">前期投入是重要考量。綠幕需要特定的空間和設備投資，而AI則將成本轉移到硬體運算能力上。</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="card rounded-xl p-6 md:p-8">
+                    <h3 class="text-xl font-bold text-white text-center mb-6">理想設置示意圖</h3>
+                    <div class="grid grid-cols-2 gap-4 divide-x divide-[#3A506B]">
+                        <div class="text-center px-2">
+                            <h4 class="font-bold text-[#5BC0BE] mb-4">綠幕設置</h4>
+                            <div class="space-y-3 flex flex-col items-center">
+                                <div class="text-sm font-semibold">💡 主光</div>
+                                <div class="flex items-center justify-between w-full max-w-[150px]">
+                                    <span class="text-sm font-semibold">💡 補光</span>
+                                    <span class="text-3xl">🧑</span>
+                                    <span class="text-sm font-semibold">💡 背光</span>
+                                </div>
+                                <div class="text-sm font-semibold">🟩 均勻打光的綠幕</div>
+                                <div class="text-sm font-semibold">🎥 攝影機</div>
+                            </div>
+                        </div>
+                        <div class="text-center px-2">
+                            <h4 class="font-bold text-[#6FFFE9] mb-4">AI 設置</h4>
+                             <div class="space-y-3 flex flex-col items-center justify-center h-full">
+                                <div class="text-3xl">🧑</div>
+                                <div class="text-sm font-semibold">💻 強力電腦 (GPU)</div>
+                                <div class="text-sm font-semibold">🎥 攝影機</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card rounded-xl p-6 md:p-8">
+                     <h3 class="text-xl font-bold text-white text-center mb-6">投入資源比較</h3>
+                    <div class="chart-container h-80">
+                        <canvas id="investmentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="performance" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-white mb-4">系統性能衝擊</h2>
+            <p class="text-lg text-center text-[#3A506B] max-w-3xl mx-auto mb-12">即時去背會消耗電腦資源。AI演算法尤其對CPU和GPU要求甚高，可能影響直播和遊戲的流暢度。</p>
+             <div class="card rounded-xl p-6 md:p-8">
+                <div class="chart-container h-80 md:h-96">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="decision" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-white mb-4">您該如何選擇？</h2>
+            <p class="text-lg text-center text-[#3A506B] max-w-3xl mx-auto mb-12">跟隨這個決策流程，找到最適合您直播需求的去背方案。</p>
+            <div class="card rounded-xl p-8">
+                <div class="flex flex-col items-center space-y-4">
+                    <div class="flowchart-node">您的首要考量是？</div>
+                    <div class="flowchart-arrow"></div>
+                    <div class="w-full flex justify-center space-x-8">
+                        <div class="w-full md:w-1/2 flex flex-col items-center space-y-4">
+                            <div class="flowchart-node w-full bg-[#143d3c]">最高畫質</div>
+                             <div class="flowchart-arrow"></div>
+                            <div class="flowchart-node w-full">有空間和預算買燈光嗎？</div>
+                            <div class="w-px h-6 bg-[#3A506B]"></div>
+                            <div class="relative w-full">
+                                <div class="flowchart-connector absolute top-1/2 left-0 -translate-y-1/2"></div>
+                                <div class="flex justify-between">
+                                    <div class="w-1/2 flex flex-col items-center space-y-4 pr-2">
+                                        <div class="flowchart-arrow rotate-90"></div>
+                                        <div class="flowchart-node w-full text-[#5BC0BE]">是</div>
+                                        <div class="flowchart-arrow"></div>
+                                        <div class="flowchart-node w-full !border-[#5BC0BE] !text-white">✅ 使用綠幕</div>
+                                    </div>
+                                     <div class="w-1/2 flex flex-col items-center space-y-4 pl-2">
+                                        <div class="flowchart-arrow rotate-90"></div>
+                                        <div class="flowchart-node w-full text-red-400">否</div>
+                                        <div class="flowchart-arrow"></div>
+                                        <div class="flowchart-node w-full !border-red-400 !text-white">⚠️ 接受AI的畫質妥協</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="w-full md:w-1/2 flex flex-col items-center space-y-4">
+                            <div class="flowchart-node w-full bg-[#2a0e4a]">便利與彈性</div>
+                             <div class="flowchart-arrow"></div>
+                            <div class="flowchart-node w-full">有強大的顯示卡(RTX)嗎？</div>
+                             <div class="w-px h-6 bg-[#3A506B]"></div>
+                            <div class="relative w-full">
+                                <div class="flowchart-connector absolute top-1/2 left-0 -translate-y-1/2"></div>
+                                <div class="flex justify-between">
+                                    <div class="w-1/2 flex flex-col items-center space-y-4 pr-2">
+                                        <div class="flowchart-arrow rotate-90"></div>
+                                        <div class="flowchart-node w-full text-[#6FFFE9]">是</div>
+                                        <div class="flowchart-arrow"></div>
+                                        <div class="flowchart-node w-full !border-[#6FFFE9] !text-white">✅ 使用AI (NVIDIA)</div>
+                                    </div>
+                                     <div class="w-1/2 flex flex-col items-center space-y-4 pl-2">
+                                        <div class="flowchart-arrow rotate-90"></div>
+                                        <div class="flowchart-node w-full text-yellow-400">否</div>
+                                        <div class="flowchart-arrow"></div>
+                                        <div class="flowchart-node w-full !border-yellow-400 !text-white">⚠️ 使用AI (可能有效能問題)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center text-sm text-[#3A506B] mt-16">
+            <p>資訊圖表由 Canvas Infographics 根據「即時直播背景移除效果對比分析」報告生成。</p>
+            <p>版權所有 © 2025</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const wrapLabel = (str, maxWidth) => {
+                const words = str.split(' ');
+                let lines = [];
+                let currentLine = words[0];
+
+                for (let i = 1; i < words.length; i++) {
+                    if ((currentLine + " " + words[i]).length > maxWidth) {
+                        lines.push(currentLine);
+                        currentLine = words[i];
+                    } else {
+                        currentLine += " " + words[i];
+                    }
+                }
+                lines.push(currentLine);
+                return lines;
+            };
+
+            const TOOLTIP_CONFIG = {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                    return label.join(' ');
+                                } else {
+                                    return label;
+                                }
+                            }
+                        },
+                        bodyFont: {
+                           size: 14,
+                        },
+                        titleFont: {
+                           size: 16,
+                           weight: 'bold',
+                        },
+                        padding: 12,
+                        backgroundColor: 'rgba(28, 37, 65, 0.9)',
+                        borderColor: '#3A506B',
+                        borderWidth: 1,
+                    }
+                }
+            };
+            
+            const CHART_DEFAULTS = {
+                color: '#A0A0A0',
+                font: {
+                    family: "'Noto Sans TC', sans-serif",
+                    size: 12,
+                }
+            };
+
+            Chart.defaults.color = CHART_DEFAULTS.color;
+            Chart.defaults.font.family = CHART_DEFAULTS.font.family;
+            Chart.defaults.font.size = CHART_DEFAULTS.font.size;
+
+
+            const createFidelityChart = () => {
+                const ctx = document.getElementById('fidelityChart');
+                if (!ctx) return;
+                new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['邊緣品質', '細節保留 (髮絲)', '偽影抑制', '一致性'],
+                        datasets: [{
+                            label: '綠幕',
+                            data: [9, 8, 9, 10],
+                            backgroundColor: 'rgba(91, 192, 190, 0.2)',
+                            borderColor: '#5BC0BE',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#5BC0BE',
+                            pointRadius: 4,
+                        }, {
+                            label: 'AI 去背',
+                            data: [5, 4, 6, 6],
+                            backgroundColor: 'rgba(111, 255, 233, 0.2)',
+                            borderColor: '#6FFFE9',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#6FFFE9',
+                            pointRadius: 4,
+                        }]
+                    },
+                    options: {
+                        ...TOOLTIP_CONFIG,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                max: 10,
+                                grid: { color: '#3A506B' },
+                                angleLines: { color: '#3A506B' },
+                                pointLabels: { 
+                                    font: { size: 14, weight: 'bold' },
+                                    color: '#E0E0E0'
+                                },
+                                ticks: {
+                                    backdropColor: '#1C2541',
+                                    color: '#A0A0A0'
+                                }
+                            }
+                        },
+                        plugins: {
+                            ...TOOLTIP_CONFIG.plugins,
+                            legend: {
+                                labels: {
+                                    font: { size: 14 }
+                                }
+                            }
+                        }
+                    }
+                });
+            };
+
+            const createInvestmentChart = () => {
+                const ctx = document.getElementById('investmentChart');
+                if (!ctx) return;
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['綠幕', 'AI 去背'],
+                        datasets: [{
+                            label: '初始投資',
+                            data: [8, 3],
+                            backgroundColor: '#5BC0BE',
+                            borderColor: '#5BC0BE',
+                            borderWidth: 1,
+                            borderRadius: 4,
+                        }, {
+                            label: '技術門檻',
+                            data: [9, 4],
+                            backgroundColor: '#6FFFE9',
+                            borderColor: '#6FFFE9',
+                            borderWidth: 1,
+                            borderRadius: 4,
+                        }]
+                    },
+                    options: {
+                        ...TOOLTIP_CONFIG,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 10,
+                                grid: { color: 'rgba(58, 80, 107, 0.5)' }
+                            },
+                            y: {
+                                grid: { display: false },
+                                ticks: { font: { size: 14, weight: 'bold' } }
+                            }
+                        },
+                         plugins: {
+                            ...TOOLTIP_CONFIG.plugins,
+                            legend: {
+                                position: 'bottom',
+                                labels: { font: { size: 14 } }
+                            },
+                            title: {
+                                display: true,
+                                text: '分數 (1-10分，越高代表投入越多)',
+                                padding: { bottom: 10 }
+                            }
+                        }
+                    }
+                });
+            };
+            
+            const createPerformanceChart = () => {
+                const ctx = document.getElementById('performanceChart');
+                if (!ctx) return;
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: [wrapLabel('傳統綠幕 (色度去背)', 16), wrapLabel('AI 智慧去背 (軟體)', 16)],
+                        datasets: [
+                            {
+                                label: 'CPU 使用率',
+                                data: [15, 60],
+                                backgroundColor: '#5BC0BE',
+                                stack: 'Stack 0',
+                                borderRadius: 4,
+                            },
+                            {
+                                label: 'GPU 使用率',
+                                data: [5, 85],
+                                backgroundColor: '#6FFFE9',
+                                stack: 'Stack 0',
+                                borderRadius: 4,
+                            }
+                        ]
+                    },
+                    options: {
+                        ...TOOLTIP_CONFIG,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                stacked: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%'
+                                    }
+                                },
+                                grid: { color: 'rgba(58, 80, 107, 0.5)' }
+                            },
+                            x: {
+                                stacked: true,
+                                grid: { display: false },
+                                ticks: { font: { size: 14 } }
+                            }
+                        },
+                        plugins: {
+                            ...TOOLTIP_CONFIG.plugins,
+                            title: {
+                                display: true,
+                                text: '相對資源消耗百分比',
+                                padding: { top: 10, bottom: 20 }
+                            },
+                            legend: {
+                                position: 'bottom',
+                                labels: { font: { size: 14 } }
+                            }
+                        }
+                    }
+                });
+            };
+
+            createFidelityChart();
+            createInvestmentChart();
+            createPerformanceChart();
+        });
+    </script>
+</body>
+</html>
 
