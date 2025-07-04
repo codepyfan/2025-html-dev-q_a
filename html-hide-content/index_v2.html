@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>需登錄才能查看完整內容</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .gradient-mask {
+                mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+                -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+            }
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-50 min-h-screen flex flex-col">
+    <!-- 導航欄 -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-primary">內容平台</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="loginBtn" class="px-4 py-2 rounded-md text-primary border border-primary hover:bg-primary/5 transition-colors duration-200">
+                        <i class="fa fa-user-circle mr-1"></i> 登錄
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主內容區 -->
+    <main class="flex-grow max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <article class="bg-white rounded-xl shadow-sm p-6 sm:p-8">
+            <h1 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-gray-900 mb-4">深入探討人工智能在現代社會中的影響</h1>
+            
+            <div class="flex items-center text-gray-500 text-sm mb-6">
+                <span>作者：AI研究員</span>
+                <span class="mx-2">‧</span>
+                <span>發佈於 2023年10月15日</span>
+                <span class="mx-2">‧</span>
+                <span>閱讀時間：8分鐘</span>
+            </div>
+            
+            <div id="contentWrapper" class="space-y-4 text-gray-700 leading-relaxed">
+                <p>人工智能(AI)正在迅速改變我們生活的方方面面，從日常通信到複雜的醫療診斷。隨著技術的進步，AI系統不僅能夠執行重複性任務，還能處理以前需要人類智能才能完成的複雜決策過程。</p>
+                
+                <p>在商業領域，AI驅動的分析工具幫助企業更準確地預測市場趨勢，優化供應鏈管理，並提供個性化的客戶體驗。例如，電商平台利用AI算法推薦用戶可能喜歡的產品，大大提高了銷售轉化率。</p>
+                
+                <p>醫療行業也是AI應用的重要領域。機器學習算法可以分析醫學影像，如X光和MRI，幫助醫生更早地發現疾病跡象。AI還能分析大量的醫療數據，尋找治療模式和預測疾病爆發。</p>
+                
+                <p>然而，AI的快速發展也帶來了一系列社會挑戰。其中最主要的是就業問題，隨著AI系統能夠執行越來越多的任務，某些行業的工作崗位可能會減少。此外，AI系統的透明度和公正性也是重要議題，因為有偏見的算法可能導致不公平的決策。</p>
+                
+                <p>教育領域也在經歷AI帶來的變革。自適應學習系統可以根據學生的學習進度和風格提供個性化的教學內容，提高學習效率。AI還能自動批改作業和提供即時反饋，減輕教師的負擔。</p>
+                
+                <p>在交通領域，自動駕駛技術是AI應用的一個典型例子。雖然完全自動駕駛的車輛尚未普及，但已經有許多輔助駕駛功能，如自動泊車和自適應巡航控制，這些功能都依賴於AI技術。</p>
+                
+                <p>社交媒體平台也廣泛使用AI來過濾內容、推薦好友和展示個性化廣告。AI算法可以分析用戶的行為和偏好，提供更符合用戶興趣的內容，這既提高了用戶體驗，也增加了平台的廣告收入。</p>
+                
+                <p>隨著AI技術的不斷發展，我們可以預見它將在更多領域發揮重要作用。然而，確保AI的發展符合人類價值觀和利益是至關重要的。這需要政府、企業和研究機構共同努力，制定適當的政策和倫理準則，引導AI技術朝著有益的方向發展。</p>
+                
+                <p>總之，人工智能在現代社會中的影響是深遠而多方面的。它既帶來了巨大的機遇，也帶來了挑戰。只有通過負責任的發展和應用，我們才能最大限度地發揮AI的潛力，同時最小化其可能帶來的負面影響。</p>
+            </div>
+            
+            <!-- 內容遮罩層 -->
+            <div id="contentMask" class="gradient-mask absolute inset-0 bg-white/80 flex flex-col items-center justify-end p-8">
+                <div class="text-center space-y-4 w-full max-w-md">
+                    <p class="text-gray-700 font-medium">繼續閱讀需要登錄賬號</p>
+                    <button id="showLoginBtn" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary/50">
+                        <i class="fa fa-lock mr-2"></i> 登錄查看完整內容
+                    </button>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- 頁腳 -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <span class="text-lg font-semibold">內容平台 c 2023</span>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 登錄模態框 -->
+    <div id="loginModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-md mx-4 transform transition-transform duration-300 scale-95">
+            <div class="p-6 sm:p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-gray-900">用戶登錄</h2>
+                    <button id="closeLoginBtn" class="text-gray-500 hover:text-gray-700">
+                        <i class="fa fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <form id="loginForm" class="space-y-4">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">郵箱</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                            <input type="email" id="email" name="email" required class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition-colors" placeholder="your@email.com">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">密碼</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                                <i class="fa fa-lock"></i>
+                            </span>
+                            <input type="password" id="password" name="password" required class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition-colors" placeholder="‧‧‧‧‧‧‧‧">
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded">
+                            <label for="remember-me" class="ml-2 block text-sm text-gray-700">記住我</label>
+                        </div>
+                        <a href="#" class="text-sm text-primary hover:text-primary/80">忘記密碼？</a>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary/50">
+                        登錄
+                    </button>
+                </form>
+                
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600">
+                        還沒有賬號？ <a href="#" class="text-primary hover:text-primary/80 font-medium">立即註冊</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 等待DOM加载完成
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取DOM元素
+            const contentWrapper = document.getElementById('contentWrapper');
+            const contentMask = document.getElementById('contentMask');
+            const loginBtn = document.getElementById('loginBtn');
+            const showLoginBtn = document.getElementById('showLoginBtn');
+            const loginModal = document.getElementById('loginModal');
+            const closeLoginBtn = document.getElementById('closeLoginBtn');
+            const loginForm = document.getElementById('loginForm');
+            
+            // 設置內容遮罩層
+            function setupContentMask() {
+                // 獲取所有段落元素
+                const paragraphs = contentWrapper.querySelectorAll('p');
+                
+                // 如果段落少於5個，直接返回不處理
+                if (paragraphs.length <= 5) return;
+                
+                // 計算從第5個段落開始的位置
+                const fifthParagraph = paragraphs[4];
+                const fifthParagraphRect = fifthParagraph.getBoundingClientRect();
+                const contentWrapperRect = contentWrapper.getBoundingClientRect();
+                
+                // 計算相對位置
+                const startPosition = fifthParagraphRect.top - contentWrapperRect.top + fifthParagraphRect.height;
+                
+                // 設置遮罩層位置和大小
+                contentMask.style.position = 'absolute';
+                contentMask.style.top = `${startPosition}px`;
+                contentMask.style.bottom = '0';
+                contentMask.style.left = '0';
+                contentMask.style.right = '0';
+                
+                // 設置內容容器為相對定位，以便遮罩層可以絕對定位
+                contentWrapper.style.position = 'relative';
+                contentWrapper.style.overflow = 'hidden';
+            }
+            
+            // 顯示登錄模態框
+            function showLoginModal() {
+                loginModal.classList.remove('opacity-0', 'pointer-events-none');
+                loginModal.querySelector('div').classList.remove('scale-95');
+                loginModal.querySelector('div').classList.add('scale-100');
+                document.body.style.overflow = 'hidden'; // 防止背景滾動
+            }
+            
+            // 隱藏登錄模態框
+            function hideLoginModal() {
+                loginModal.classList.add('opacity-0', 'pointer-events-none');
+                loginModal.querySelector('div').classList.remove('scale-100');
+                loginModal.querySelector('div').classList.add('scale-95');
+                document.body.style.overflow = ''; // 恢復背景滾動
+            }
+            
+            // 登錄成功處理
+            function handleLoginSuccess() {
+                // 模擬登錄成功
+                contentMask.remove(); // 移除遮罩層
+                hideLoginModal();
+                
+                // 顯示登錄成功消息
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg transform transition-all duration-500 translate-y-0 opacity-100 z-50';
+                notification.innerHTML = '<i class="fa fa-check-circle mr-2"></i> 登錄成功，現在可以查看完整內容';
+                document.body.appendChild(notification);
+                
+                // 3秒後隱藏消息
+                setTimeout(() => {
+                    notification.classList.remove('translate-y-0', 'opacity-100');
+                    notification.classList.add('translate-y-[-20px]', 'opacity-0');
+                    setTimeout(() => notification.remove(), 500);
+                }, 3000);
+                
+                // 更新導航欄
+                loginBtn.innerHTML = '<i class="fa fa-user-circle mr-1"></i> 我的賬戶';
+                loginBtn.classList.remove('border-primary', 'text-primary', 'hover:bg-primary/5');
+                loginBtn.classList.add('bg-primary/10', 'text-primary', 'hover:bg-primary/20');
+            }
+            
+            // 初始化遮罩層
+            setupContentMask();
+            
+            // 事件監聽
+            loginBtn.addEventListener('click', showLoginModal);
+            showLoginBtn.addEventListener('click', showLoginModal);
+            closeLoginBtn.addEventListener('click', hideLoginModal);
+            
+            // 點擊模態框背景關閉
+            loginModal.addEventListener('click', function(e) {
+                if (e.target === loginModal) {
+                    hideLoginModal();
+                }
+            });
+            
+            // 登錄表單提交
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 模擬登錄過程
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                // 簡單驗證
+                if (email && password) {
+                    // 模擬API請求延遲
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i> 登錄中...';
+                    
+                    setTimeout(() => {
+                        handleLoginSuccess();
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalText;
+                    }, 1000);
+                }
+            });
+            
+            // 滾動效果 - 導航欄樣式變化
+            window.addEventListener('scroll', function() {
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 10) {
+                    nav.classList.add('shadow');
+                } else {
+                    nav.classList.remove('shadow');
+                }
+            });
+        });
+    </script>
+</body>
+</html>    
